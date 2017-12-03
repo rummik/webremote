@@ -1,0 +1,35 @@
+{
+  "name": "webremote",
+  "version": "1.0.0",
+  "description": "Lirc webremote server",
+  "main": "app.js",
+  "dependencies": {
+    "font-awesome": "^4.7.0",
+    "koa": "^2.4.1",
+    "koa-router": "^7.3.0",
+    "koa-static": "^4.0.2",
+    "lirc-client": "^1.0.0",
+    "pify": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rummik/webremote.git"
+  },
+  "keywords": [
+    "lirc",
+    "web",
+    "remote",
+    "server",
+    "tv"
+  ],
+  "author": "Kimberly Zick <k@9k1.us> (rummik)",
+  "license": "MPL",
+  "bugs": {
+    "url": "https://github.com/rummik/webremote/issues"
+  },
+  "homepage": "https://github.com/rummik/webremote#readme"
+}
