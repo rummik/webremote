@@ -8,29 +8,42 @@ const pify = require('pify');
 const router = new Router({ prefix: '/lirc' });
 const app = new Koa();
 
-const remote = lirc({ host: '10.42.0.243' });
+const remote = lirc({ host: '10.17.2.69' });
+
+let queue = [];
 
 remote.cmd = pify(remote.cmd.bind(remote));
 
-router.get('/:command', async ctx => {
-  ctx.body = await remote
-    .cmd(ctx.params.command)
-    .then(response => { return { status: 'OK', response }; })
-    .catch(response => { return { status: 'ERROR', response }; });
-});
+remote.on('connect', () =>
+  console.log('connected to lirc')
+);
 
-router.get('/:command/:arg1', async ctx => {
-  ctx.body = await remote
-    .cmd(ctx.params.command, ctx.params.arg1)
-    .then(response => { return { status: 'OK', response }; })
-    .catch(response => { return { status: 'ERROR', response }; });
-});
+remote.on('error', error =>
+  console.log(error)
+);
 
-router.get('/:command/:arg1/:arg2', async ctx => {
-  ctx.body = await remote
-    .cmd(ctx.params.command, ctx.params.arg1, ctx.params.arg2)
-    .then(response => { return { status: 'OK', response }; })
-    .catch(response => { return { status: 'ERROR', response }; });
+(function next() {
+  if (queue.length) {
+    queue.shift().call().then(next);
+  } else {
+    setTimeout(next, 10);
+  }
+})();
+
+router.get([ '/:p1', '/:p1/:p2', '/:p1/:p2/:p3' ], async ctx => {
+  let { p1, p2, p3 } = ctx.params;
+
+  console.log(`queuing ${p1} ${p2} ${p3}`);
+
+  ctx.body = await new Promise(resolve =>
+    queue.push(() => {
+      console.log(`sending ${p1} ${p2} ${p3}`);
+
+      return remote.cmd(p1, p2, p3)
+        .then(response => resolve({ status: 'OK', response }))
+        .catch(error => resolve({ status: 'ERROR', error }));
+    })
+  );
 });
 
 app
