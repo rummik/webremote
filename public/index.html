@@ -1,5 +1,6 @@
 <!doctype html>
 <meta name="viewport" content="width=device-width, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
 
 <svg viewbox="-1 -2 92 139">
   <defs>
@@ -8,7 +9,7 @@
     </clipPath>
   </defs>
 
-  <g remote="magnavox" opacity="0.7">
+  <g remote="magnavox" opacity="0.9">
     <g id="allpower">
       <rect style="fill: darkred" width="22.5" height="10" />
       <text x="11.25" y="5">&#xf011;</text>
@@ -200,10 +201,9 @@
         <text x="11.25" y="5">&#xf050;</text>
       </g>
 
-      <g id="soundbar-tv" transform="translate(67.5 0)">
+      <g key="input" transform="translate(67.5 0)">
         <rect width="22.5" height="10" />
-        <text x="11.25" y="5">&#xf26c;</text>
-      </g>
+        <text x="11.25" y="5">&#xf0ec;</text>
     </g>
   </g>
 </svg>
@@ -221,6 +221,8 @@ html, body {
 }
 
 svg {
+  margin: 0;
+  padding: 0;
   width: 100vw;
   position: absoulte;
   top: 0;
@@ -251,6 +253,16 @@ text {
     src: url('fontawesome-webfont.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
+}
+
+@media all and (orientation: landscape) {
+  html {
+    overflow: hidden;
+  }
+
+  svg {
+    height: 100vh;
+  }
 }
 </style>
 

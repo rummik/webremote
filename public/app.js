@@ -1,32 +1,11 @@
 const lirc = new class lirc {
-  constructor() {
-    let queue = this._queue = [];
-
-    (function next() {
-      if (queue.length) {
-        queue.shift().call().then(next);
-      } else {
-        setTimeout(next, 10);
-      }
-    })();
-  }
-
   _command(...args) {
-    console.debug('queuing', args.join(' '));
+    let result = fetch(`/lirc/${args.join('/')}`)
+      .then(response => response.json());
 
-    return new Promise(resolve =>
-      this._queue.push(() => {
-        console.debug('sending', args.join(' '));
+    result.then(data => console.debug(data));
 
-        return fetch(`/lirc/${args.join('/')}`)
-          .then(response => response.json())
-          .then(data => {
-            console.debug('received:', data);
-            resolve(data);
-            return data;
-          });
-      })
-    );
+    return result.then(data => data.status !== 'OK' ? Promise.reject(data) : data);
   }
 
   send(remote, code) {
@@ -45,9 +24,10 @@ const lirc = new class lirc {
 let elements = document.querySelectorAll('g, path, circle, rect');
 
 for (let element of elements) {
-  let remote = element.getAttribute('remote');
   let key = element.getAttribute('key');
   let pn = element.parentNode;
+  let remote = element.getAttribute('remote');
+  let timeout;
 
   while (!remote && pn.getAttribute) {
     remote = pn.getAttribute('remote');
@@ -55,11 +35,22 @@ for (let element of elements) {
   }
 
   if (remote && key) {
-    element.addEventListener('press', () => lirc.send(remote, key));
-    element.addEventListener('touchstart', () => lirc.press(remote, key));
-    element.addEventListener('touchend', () => lirc.release(remote, key));
-    element.addEventListener('selectstart', () => false);
-    element.setAttribute('unselectable', 'on');
+    element.addEventListener('click', () => lirc.send(remote, key));
+
+    element.addEventListener('mousedown', () => {
+      timeout = setTimeout(() => {
+        lirc.press(remote, key);
+        timeout = null;
+      }, 300);
+    });
+
+    element.addEventListener('mouseup', () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      } else {
+        lirc.release(remote, key);
+      }
+    });
   }
 }
 
@@ -68,22 +59,12 @@ document.querySelector('#allpower')
     await lirc.send('magnavox', 'power');
     await lirc.send('soundbar', 'power');
     await lirc.send('soundbar', 'music');
-    await lirc.send('soundbar', 'bluetooth');
-    await lirc.send('soundbar', 'input');
   });
 
 document.querySelector('#soundbar')
   .addEventListener('click', async () => {
     await lirc.send('soundbar', 'power');
     await lirc.send('soundbar', 'music');
-    await lirc.send('soundbar', 'bluetooth');
-    await lirc.send('soundbar', 'input');
-  });
-
-document.querySelector('#soundbar-tv')
-  .addEventListener('click', async () => {
-    await lirc.send('soundbar', 'bluetooth');
-    await lirc.send('soundbar', 'input');
   });
 
 window.oncontextmenu = () => false;

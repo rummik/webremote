@@ -8,8 +8,7 @@
     "koa": "^2.4.1",
     "koa-router": "^7.3.0",
     "koa-static": "^4.0.2",
-    "lirc-client": "^1.0.0",
-    "pify": "^3.0.0"
+    "lirc-client": "github:rummik/lirc-client"
   },
   "devDependencies": {},
   "scripts": {
