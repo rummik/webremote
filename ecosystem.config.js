@@ -16,7 +16,11 @@ module.exports = {
       ref: 'origin/master',
       repo: 'https://github.com/rummik/webremote.git',
       path: '/home/pi/webremote',
-      'post-deploy': 'npm install && pm2 startOrRestart ecosystem.config.js --env production',
+      'post-deploy': [
+        'export PATH=$PATH:/opt/nodejs/bin',
+        'npm install',
+        'pm2 startOrRestart ecosystem.config.js --env production',
+      ].join(' && '),
     },
   },
 };
