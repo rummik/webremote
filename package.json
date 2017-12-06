@@ -4,11 +4,11 @@
   "description": "Lirc webremote server",
   "main": "app.js",
   "dependencies": {
-    "font-awesome": "^4.7.0",
     "koa": "^2.4.1",
     "koa-router": "^7.3.0",
     "koa-static": "^4.0.2",
-    "lirc-client": "github:rummik/lirc-client"
+    "lirc-client": "github:rummik/lirc-client",
+    "material-design-icons": "github:google/material-design-icons"
   },
   "devDependencies": {},
   "scripts": {

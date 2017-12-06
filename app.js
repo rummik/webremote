@@ -31,7 +31,7 @@ app
   .use(router.routes())
   .use(router.allowedMethods())
   .use(serve('public'))
-  .use(serve('node_modules/font-awesome/fonts/'));
+  .use(serve('node_modules/material-design-icons/iconfont'));
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`listening on http://localhost:${process.env.PORT || 3000}`);
