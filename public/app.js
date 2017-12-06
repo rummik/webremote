@@ -35,22 +35,53 @@ for (let element of elements) {
   }
 
   if (remote && key) {
-    element.addEventListener('click', () => lirc.send(remote, key));
-
-    element.addEventListener('mousedown', () => {
+    let start = ({ type }) => {
       timeout = setTimeout(() => {
         lirc.press(remote, key);
         timeout = null;
       }, 300);
-    });
 
-    element.addEventListener('mouseup', () => {
+      if (type === 'mousedown') {
+        element.removeEventListener('touchstart', start);
+        window.addEventListener('mousemove', move);
+        window.addEventListener('mouseup', stop);
+      } else {
+        element.removeEventListener('mousedown', start);
+        window.addEventListener('touchmove', move);
+        window.addEventListener('touchend', stop);
+      }
+    };
+
+    let move = ev => {
+      let { pageX: x, pageY: y } = ev.touches ? ev.touches[0] : ev;
+      let el = document.elementFromPoint(x, y);
+
+      for (;el !== element && el.getAttribute; el = el.parentNode);
+
+      if (el !== element) {
+        stop(ev, true);
+      }
+    };
+
+    let stop = ({ type }, cancel=false) => {
       if (timeout) {
         clearTimeout(timeout);
+
+        if (!cancel) {
+          lirc.send(remote, key);
+        }
       } else {
         lirc.release(remote, key);
       }
-    });
+
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('touchmove', move);
+      window.removeEventListener('mouseup', stop);
+      window.removeEventListener('touchend', stop);
+    };
+
+    element.addEventListener('mousedown', start);
+    element.addEventListener('touchstart', start);
   }
 }
 
