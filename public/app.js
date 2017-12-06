@@ -21,7 +21,7 @@ const lirc = new class lirc {
   }
 };
 
-let elements = document.querySelectorAll('g, path, circle, rect');
+let elements = document.querySelectorAll('a, g, path, circle, rect');
 
 for (let element of elements) {
   let key = element.getAttribute('key');
