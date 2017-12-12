@@ -104,7 +104,7 @@
         <text x="11" y="6.75">av_timer</text>
       </a>
 
-      <a key="mute" transform="translate(0 54)">
+      <a key="mute" remote="soundbar" transform="translate(0 54)">
         <rect width="22.5" height="13.5" />
         <text x="11" y="6.75">volume_off</text>
       </a>
@@ -112,12 +112,12 @@
 
     <g transform="translate(22.5 0)">
       <g opacity="0.7">
-        <g key="volumeup">
+        <g key="volumeup" remote="soundbar">
           <rect width="33.75" height="33.75" />
           <a><text x="11.25" y="9.5" transform="rotate(-45 11.25 11.25) rotate(45 11.25 9.5)">volume_up</text></a>
         </g>
 
-        <g key="volumedown" transform="rotate(-90 33.75 33.75)">
+        <g key="volumedown" remote="soundbar" transform="rotate(-90 33.75 33.75)">
           <rect width="33.75" height="33.75" />
           <a><text x="11.25" y="9.5" transform="rotate(-45 11.25 11.25) rotate(135 11.25 9.5)">volume_down</text></a>
         </g>
@@ -185,19 +185,19 @@
   </g>
 
   <g remote="soundbar" transform="translate(0 123.5)" opacity="0.5">
-    <a key="volumeup">
+    <a key="previous">
       <rect width="22.5" height="10" />
-      <text x="11.25" y="5">volume_up</text>
+      <text x="11.25" y="5">skip_previous</text>
     </a>
 
-    <a key="volumedown" transform="translate(22.5 0)">
+    <a key="playpause" transform="translate(22.5 0)">
       <rect width="22.5" height="10" />
-      <text x="11.25" y="5">volume_down</text>
+      <text x="11.25" y="5">play_arrowpause</text>
     </a>
 
-    <a key="mute" transform="translate(45 0)">
+    <a key="next" transform="translate(45 0)">
       <rect width="22.5" height="10" />
-      <text x="11.25" y="5">volume_off</text>
+      <text x="11.25" y="5">skip_next</text>
     </a>
 
     <a key="bluetooth" transform="translate(67.5 0)">
@@ -206,19 +206,19 @@
     </a>
 
     <g transform="translate(0 10)">
-      <a key="previous">
+      <a key="bass">
         <rect width="22.5" height="10" />
-        <text x="11.25" y="5">skip_previous</text>
+        <text x="11.25" y="5">rotate_lefttune</text>
       </a>
 
-      <a key="playpause" transform="translate(22.5 0)">
+      <a key="trebel" transform="translate(22.5 0)">
         <rect width="22.5" height="10" />
-        <text x="11.25" y="5">play_arrowpause</text>
+        <text x="11.25" y="5">tunerotate_right</text>
       </a>
 
-      <a key="next" transform="translate(45 0)">
+      <a key="sub" transform="translate(45 0)">
         <rect width="22.5" height="10" />
-        <text x="11.25" y="5">skip_next</text>
+        <text x="11.25" y="5">speaker_group</text>
       </a>
 
       <a key="input" transform="translate(67.5 0)">
