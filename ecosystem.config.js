@@ -12,7 +12,7 @@ module.exports = {
   deploy: {
     production: {
       user: 'pi',
-      host: '10.17.2.69',
+      host: '10.17.2.190',
       ref: 'origin/master',
       repo: 'https://github.com/rummik/webremote.git',
       path: '/home/pi/webremote',
