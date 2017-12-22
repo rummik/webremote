@@ -18,6 +18,8 @@ module.exports = {
       path: '/home/pi/webremote',
       'post-deploy': [
         'export PATH=$PATH:/opt/nodejs/bin',
+        'sudo cp lircd.conf.d/* /etc/lirc/lircd.conf.d',
+        'sudo service lircd reload',
         'npm install',
         'pm2 startOrRestart ecosystem.config.js --env production',
       ].join(' && '),
