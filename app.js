@@ -7,7 +7,7 @@ const serve = require('koa-static');
 const router = new Router({ prefix: '/lirc' });
 const app = new Koa();
 
-const lirc = new Lirc({ host: process.env.NODE_HOST || 'localhost' });
+const lirc = new Lirc({ host: process.env.HOST || 'localhost' });
 
 lirc.on('connect', () =>
   console.log('connected to lirc')
