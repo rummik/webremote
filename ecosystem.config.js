@@ -11,15 +11,13 @@ module.exports = {
 
   deploy: {
     production: {
-      user: 'pi',
-      host: '10.17.2.190',
+      user: 'rummik',
+      host: 'handinavi',
       ref: 'origin/master',
       repo: 'https://github.com/rummik/webremote.git',
-      path: '/home/pi/webremote',
+      path: '/home/rummik/webremote',
       'post-deploy': [
         'export PATH=$PATH:/opt/nodejs/bin',
-        'sudo cp lircd.conf.d/* /etc/lirc/lircd.conf.d',
-        'sudo service lircd reload',
         'npm install',
         'pm2 startOrRestart ecosystem.config.js --env production',
       ].join(' && '),
