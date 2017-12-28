@@ -5,6 +5,7 @@ module.exports = {
       script: 'app.js',
       env_production : {
         NODE_ENV: 'production',
+        PORT: 80,
       },
     },
   ],
@@ -19,7 +20,7 @@ module.exports = {
       'post-deploy': [
         'export PATH=$PATH:/opt/nodejs/bin',
         'npm install',
-        'pm2 startOrRestart ecosystem.config.js --env production',
+        'authbind --deep pm2 startOrRestart ecosystem.config.js --env production',
       ].join(' && '),
     },
   },
